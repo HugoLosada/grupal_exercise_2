@@ -1,29 +1,42 @@
+import random
+
+import random
+
 def contactos(infectados):
-    contacto = infectados*random.randint(0,5)
+    contacto = infectados * random.randint(0, 5)
     return contacto
 
 def contagio(contactos):
-    contagiados = contactos-random.randint(contactos)
+    contagiados = random.randint(0, contactos)
     return contagiados
 
-def simulación():
-    while poblacion["día"]<30:
-        contactados = contactos(población["infectados"])
+def simulacion(ambiente):
+    while ambiente["día"] < 30 and ambiente["sanos"]>0 and ambiente["infectados"]<1000:
+        contactados = contactos(ambiente["infectados"])
         contagiados = contagio(contactados)
-        población["sanos"]-=contagiados
-        población["infectados"]+=contagiados
-        población["día"]+=1
+        ambiente["sanos"] -= contagiados
+        ambiente["infectados"] += contagiados
+        ambiente["día"] += 1
 
-        print("Infectados en el día",poblacion["día"],":"poblacion["infectados"])
-        print("Quedan", poblacion["sanos"],"habitantes sanos.")
+        print("Infectados en el día", ambiente["día"], ":", ambiente["infectados"])
+        print("Quedan", ambiente["sanos"], "habitantes sanos.")
 
-        if población["día"]>= 30:
+        if ambiente["día"] >= 30:
+            print("Simulación completada.")
             break
 
-población ={
+        elif ambiente["sanos"] == 0:
+            print("Todos los habitantes han sido infectados.")
+            break
+
+        elif ambiente["infectados"] == 1000:
+            print("Todos los habitantes han sido infectados.")
+            break
+
+poblacion = {
     "sanos": 999,
-    "infrctados": 1,
-    "día":0
+    "infectados": 1,
+    "día": 0
 }
 
-simulación()
+simulacion(poblacion)
