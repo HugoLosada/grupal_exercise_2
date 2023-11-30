@@ -9,21 +9,23 @@ def contagio(contactos):
     return contagiados
 
 def recuperaciones(infectados):
-    recuperados = infectados - random.randint(0, infectados) 
+    recuperados = infectados - random.randint(0, infectados)
     return recuperados
 
 def simulacion(ambiente):
     while ambiente["día"] < 30 and ambiente["sanos"]>0 and ambiente["infectados"]<1000:
         contactados = contactos(ambiente["infectados"])
         contagiados = contagio(contactados)
-        recuperados = recuperaciones(ambiente["infectados"])
         ambiente["sanos"] -= contagiados
         ambiente["infectados"] += contagiados
         ambiente["día"] += 1
 
         if ambiente["día"]>7:
-            ambiente["infectados"] -= recuperados
-            ambiente["sanos"] += recuperados
+            recuperados = recuperaciones(ambiente["infectados"])
+            return recuperados
+        
+        ambiente["infectados"]-= recuperados
+        ambiente["sanos"]+= recuperados
 
         print("Infectados en el día", ambiente["día"], ":", ambiente["infectados"])
         print("Quedan", ambiente["sanos"], "habitantes sanos.")
